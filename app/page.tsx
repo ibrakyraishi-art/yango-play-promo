@@ -7,6 +7,7 @@ function YangoContent() {
   const searchParams = useSearchParams()
   const [oneLinkUrl, setOneLinkUrl] = useState('https://play.yango.com')
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [lang, setLang] = useState<'en' | 'ar'>('en')
 
   useEffect(() => {
     const utmSource = searchParams.get('utm_source') || ''
@@ -37,36 +38,39 @@ function YangoContent() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 5)
-    }, 3000)
+      setCurrentSlide((prev) => (prev + 1) % series.length)
+    }, 3500)
     return () => clearInterval(interval)
   }, [])
 
   const series = [
     {
-      title: 'بضيع يا صح في يوم ولا...',
-      subtitle: 'In just a few hours love ignites, secrets unravel and lives change forever',
-      image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=700&fit=crop&q=80',
+      title: 'Roses and Chocolate',
+      titleAr: 'ورود وشوكولاته',
+      subtitle: 'Inspired by true events, Marwa, a high-profile TV host, crosses paths with a powerful lawyer live on air. A single spark pulls her into a world where personal feelings collide with public pressure.',
+      subtitleAr: 'مستوحى من أحداث حقيقية - "مروة"، إعلامية شهيرة وجريئة تُقدّم برنامجاً على إحدى القنوات الفضائية المعروفة، وتُعرف بأسلوبها الصادم وصوتها العالي في كشف القضايا الجريئة.',
+      image: 'http://avatars.mds.yandex.net/get-ott/1534341/2a0000019aa6eabc78a058b306150187c102/orig',
     },
     {
-      title: 'أهل الكهف',
-      subtitle: 'A thrilling journey through time and mystery',
-      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=700&fit=crop&q=80',
+      title: '2 Coffee',
+      titleAr: '2 قهوة',
+      subtitle: 'Yahya El-Wakeel, a well-known writer and media figure in his mid-thirties, comes from a wealthy Upper Egyptian family with a blend of modern thought and deep-rooted Egyptian values.',
+      subtitleAr: 'يحيى الوكيل كاتب و إعلامي مشهور في منتصف الثلاثينات من جذور صعيدية وأسرة تعد من الأثرياء بالمدينة.. امتزجت أفكاره ما بين التحضر و التمسك بالقيم والتقاليد المصرية.',
+      image: 'http://avatars.mds.yandex.net/get-ott/1672343/2a0000019acae6671dc5dd251570b450214f/orig',
     },
     {
-      title: 'السجادة الأفاضال',
-      subtitle: 'Comedy series that will make you laugh',
-      image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=700&fit=crop&q=80',
+      title: 'Ex-Merati',
+      titleAr: 'طليقتي',
+      subtitle: 'Taha, a dangerous ex-convict, is set free from prison halfway through his sentence. Upon his release, Taha discovers that his wife had left him and married another man.',
+      subtitleAr: '«طه» مسجون شديد الخطورة، على وشك الخروج من السجن بعد نصف المدة، ولكن تحت إشراف طبيبه النفسي «يوسف» للتأكد من حسن سيره وسلوكه.',
+      image: 'http://avatars.mds.yandex.net/get-ott/223007/2a0000019aee96578f0b14aeff1c98db1104/orig',
     },
     {
-      title: 'مسلسلات حصرية',
-      subtitle: 'Exclusive content only on Yango Play',
-      image: 'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=400&h=700&fit=crop&q=80',
-    },
-    {
-      title: 'دراما عربية',
-      subtitle: 'The best Arabic drama series',
-      image: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400&h=700&fit=crop&q=80',
+      title: 'Al Sada Al Afadel',
+      titleAr: 'السادة الأفاضل',
+      subtitle: 'After their father Galal dies, the Abu El Fadl family\'s quiet life collapses. Eldest son Tarek struggles with debts and strange artifacts.',
+      subtitleAr: 'بعد وفاة الأب جلال، تنهار حياة عائلة أبو الفضل، فيتحمل طارق المسؤولية وحده ويعود حجازي من القاهرة ليجد عائلته أكبر أزماته.',
+      image: 'http://avatars.mds.yandex.net/get-ott/13051577/2a0000019b4b0ec3ea57b2cc625f55435a0b/orig',
     },
   ]
 
@@ -79,32 +83,60 @@ function YangoContent() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
       
-      <header className="relative z-10 py-6 px-6 md:px-12">
+      <header className="relative z-10 py-4 px-4 md:py-6 md:px-12">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl md:text-3xl font-black tracking-tight" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <h1 className="text-xl md:text-3xl font-black tracking-tight" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
               YANGO PLAY
             </h1>
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-2 rounded-full animate-pulse">
-              <p className="text-lg font-bold">Привет Ибра! 👋</p>
+            
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full p-1">
+                <button
+                  onClick={() => setLang('en')}
+                  className={`px-3 py-1 text-sm font-medium rounded-full transition-all ${
+                    lang === 'en' ? 'bg-white text-black' : 'text-white/70 hover:text-white'
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => setLang('ar')}
+                  className={`px-3 py-1 text-sm font-medium rounded-full transition-all ${
+                    lang === 'ar' ? 'bg-white text-black' : 'text-white/70 hover:text-white'
+                  }`}
+                >
+                  العربية
+                </button>
+              </div>
+              
+              <div className="hidden sm:block bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full">
+                <p className="text-sm md:text-base font-bold whitespace-nowrap">👋 Привет Ибра!</p>
+              </div>
             </div>
           </div>
           <p className="text-xs md:text-sm text-white/60 mt-2 max-w-2xl">
-            All Yango Play subscribers can have a free 60 days subscription to watch on TV at home.
+            {lang === 'en' 
+              ? 'All Yango Play subscribers can have a free 60 days subscription to watch on TV at home.'
+              : 'جميع مشتركي Yango Play يمكنهم الحصول على اشتراك مجاني لمدة 60 يومًا للمشاهدة على التلفزيون في المنزل.'}
           </p>
         </div>
       </header>
 
-      <main className="relative z-10 px-6 md:px-12 py-8 md:py-12">
+      <main className="relative z-10 px-4 md:px-12 py-6 md:py-12">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-12" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
-            FREE 60 DAYS<br />OF THE BEST SERIES
+          <h2 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-8 md:mb-12 ${lang === 'ar' ? 'font-arabic' : ''}`} style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+            {lang === 'en' ? (
+              <>FREE 60 DAYS<br />OF THE BEST SERIES</>
+            ) : (
+              <>60 يومًا مجانًا<br />من أفضل المسلسلات</>
+            )}
           </h2>
 
-          <div className="relative max-w-md mx-auto mb-12">
+          <div className="relative max-w-sm mx-auto mb-8 md:mb-12">
             <div className="relative p-1 rounded-[3rem] bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 shadow-2xl shadow-purple-500/50">
               <div className="bg-black rounded-[2.8rem] overflow-hidden">
-                <div className="relative aspect-[9/19.5] bg-gradient-to-b from-gray-900 to-black">
+                <div className="relative aspect-[9/19.5] bg-gradient-to-b from-gray-900 to-black"
                   <div className="absolute top-0 left-0 right-0 px-8 py-3 flex items-center justify-between text-white text-sm z-20">
                     <span className="font-semibold">05:07</span>
                     <div className="flex items-center gap-1">
@@ -116,18 +148,19 @@ function YangoContent() {
                   <div className="relative h-full">
                     <img 
                       src={series[currentSlide].image} 
-                      alt={series[currentSlide].title}
+                      alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-left">
-                      <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white" style={{ fontFamily: 'Arial, sans-serif' }}>
-                        {series[currentSlide].title}
+                    <div className={`absolute bottom-0 left-0 right-0 p-4 md:p-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                      <h3 className="text-xl md:text-2xl font-bold mb-2 text-white" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                       </h3>
-                      <p className="text-sm text-white/80 mb-4 line-clamp-2">
-                        {series[currentSlide].subtitle}
+                      <p className="text-xs md:text-sm text-white/80 mb-3 line-clamp-3">
+                        {lang === 'en' ? series[currentSlide].subtitle : series[currentSlide].subtitleAr}
                       </p>
                       
                       <div className="flex items-center justify-center gap-2 mb-4">
@@ -156,9 +189,9 @@ function YangoContent() {
 
           <button
             onClick={handleDownload}
-            className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg md:text-xl font-bold px-12 py-4 rounded-full transition-all duration-300 shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-105"
+            className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-base md:text-lg lg:text-xl font-bold px-8 md:px-12 py-3 md:py-4 rounded-full transition-all duration-300 shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-105 active:scale-95"
           >
-            Download App
+            {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
           </button>
         </div>
       </main>
