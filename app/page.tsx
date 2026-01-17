@@ -50,6 +50,8 @@ function YangoContent() {
       subtitle: 'Inspired by true events, Marwa, a high-profile TV host, crosses paths with a powerful lawyer live on air. A single spark pulls her into a world where personal feelings collide with public pressure.',
       subtitleAr: 'مستوحى من أحداث حقيقية - "مروة"، إعلامية شهيرة وجريئة تُقدّم برنامجاً على إحدى القنوات الفضائية المعروفة، وتُعرف بأسلوبها الصادم وصوتها العالي في كشف القضايا الجريئة.',
       image: 'http://avatars.mds.yandex.net/get-ott/1534341/2a0000019aa6eabc78a058b306150187c102/orig',
+      bgGradient: 'from-[#0a1633] via-[#2d1845] to-[#1a0a2e]', // Purple-pink theme
+      glowColor: 'bg-pink-600/25',
     },
     {
       title: '2 Coffee',
@@ -57,6 +59,8 @@ function YangoContent() {
       subtitle: 'Yahya El-Wakeel, a well-known writer and media figure in his mid-thirties, comes from a wealthy Upper Egyptian family with a blend of modern thought and deep-rooted Egyptian values.',
       subtitleAr: 'يحيى الوكيل كاتب و إعلامي مشهور في منتصف الثلاثينات من جذور صعيدية وأسرة تعد من الأثرياء بالمدينة.. امتزجت أفكاره ما بين التحضر و التمسك بالقيم والتقاليد المصرية.',
       image: 'http://avatars.mds.yandex.net/get-ott/1672343/2a0000019acae6671dc5dd251570b450214f/orig',
+      bgGradient: 'from-[#0a1020] via-[#1a2845] to-[#0f1a2e]', // Blue theme
+      glowColor: 'bg-blue-600/25',
     },
     {
       title: 'Ex-Merati',
@@ -64,6 +68,8 @@ function YangoContent() {
       subtitle: 'Taha, a dangerous ex-convict, is set free from prison halfway through his sentence. Upon his release, Taha discovers that his wife had left him and married another man.',
       subtitleAr: '«طه» مسجون شديد الخطورة، على وشك الخروج من السجن بعد نصف المدة، ولكن تحت إشراف طبيبه النفسي «يوسف» للتأكد من حسن سيره وسلوكه.',
       image: 'http://avatars.mds.yandex.net/get-ott/223007/2a0000019aee96578f0b14aeff1c98db1104/orig',
+      bgGradient: 'from-[#1a0a0a] via-[#2d1a1a] to-[#1a0f0f]', // Dark red theme
+      glowColor: 'bg-red-600/25',
     },
     {
       title: 'Al Sada Al Afadel',
@@ -71,6 +77,8 @@ function YangoContent() {
       subtitle: 'After their father Galal dies, the Abu El Fadl family\'s quiet life collapses. Eldest son Tarek struggles with debts and strange artifacts.',
       subtitleAr: 'بعد وفاة الأب جلال، تنهار حياة عائلة أبو الفضل، فيتحمل طارق المسؤولية وحده ويعود حجازي من القاهرة ليجد عائلته أكبر أزماته.',
       image: 'http://avatars.mds.yandex.net/get-ott/13051577/2a0000019b4b0ec3ea57b2cc625f55435a0b/orig',
+      bgGradient: 'from-[#0f1a0a] via-[#1a2d1a] to-[#0a1a0f]', // Green theme
+      glowColor: 'bg-green-600/25',
     },
   ]
 
@@ -79,9 +87,9 @@ function YangoContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a1633] via-[#1a2855] to-[#0a1633] text-white relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
+    <div className={`min-h-screen bg-gradient-to-br ${series[currentSlide].bgGradient} text-white relative overflow-hidden transition-colors duration-700`}>
+      <div className={`absolute top-0 left-1/4 w-96 h-96 ${series[currentSlide].glowColor} rounded-full blur-3xl transition-colors duration-700`}></div>
+      <div className={`absolute bottom-0 right-1/4 w-96 h-96 ${series[currentSlide].glowColor} rounded-full blur-3xl transition-colors duration-700`}></div>
       
       <header className="relative z-10 py-4 px-4 md:py-6 md:px-12">
         <div className="max-w-6xl mx-auto">
