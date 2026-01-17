@@ -98,7 +98,7 @@ function YangoContent() {
                     lang === 'en' ? 'bg-white text-black' : 'text-white/70 hover:text-white'
                   }`}
                 >
-                  English
+                  EN
                 </button>
                 <button
                   onClick={() => setLang('ar')}
@@ -106,95 +106,123 @@ function YangoContent() {
                     lang === 'ar' ? 'bg-white text-black' : 'text-white/70 hover:text-white'
                   }`}
                 >
-                  العربية
+                  AR
                 </button>
-              </div>
-              
-              <div className="hidden sm:block bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full">
-                <p className="text-sm md:text-base font-bold whitespace-nowrap">👋 Привет Ибра!</p>
               </div>
             </div>
           </div>
-          <p className="text-xs md:text-sm text-white/60 mt-2 max-w-2xl">
-            {lang === 'en' 
-              ? 'All Yango Play subscribers can have a free 60 days subscription to watch on TV at home.'
-              : 'جميع مشتركي Yango Play يمكنهم الحصول على اشتراك مجاني لمدة 60 يومًا للمشاهدة على التلفزيون في المنزل.'}
-          </p>
         </div>
       </header>
 
-      <main className="relative z-10 px-4 md:px-12 py-6 md:py-12">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className={`text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-8 md:mb-12 ${lang === 'ar' ? 'font-arabic' : ''}`} style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
-            {lang === 'en' ? (
-              <>FREE 60 DAYS<br />OF THE BEST SERIES</>
-            ) : (
-              <>60 يومًا مجانًا<br />من أفضل المسلسلات</>
-            )}
-          </h2>
+      <main className="relative z-10 px-4 md:px-12 py-4 md:py-8">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Featured Series - Main Card */}
+          <div className={`mb-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+            <h2 className="text-2xl md:text-4xl font-black mb-3" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+              {lang === 'en' ? 'FREE 60 DAYS' : '60 يومًا مجانًا'}
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
+              {lang === 'en' 
+                ? 'Get unlimited access to the best series'
+                : 'احصل على وصول غير محدود لأفضل المسلسلات'}
+            </p>
+          </div>
 
-          <div className="relative max-w-sm mx-auto mb-8 md:mb-12">
-            <div className="relative p-1 rounded-[3rem] bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 shadow-2xl shadow-purple-500/50">
-              <div className="bg-black rounded-[2.8rem] overflow-hidden">
-                <div className="relative aspect-[9/19.5] bg-gradient-to-b from-gray-900 to-black">
-                  <div className="absolute top-0 left-0 right-0 px-8 py-3 flex items-center justify-between text-white text-sm z-20">
-                    <span className="font-semibold">05:07</span>
-                    <div className="flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-                    </div>
-                  </div>
-
-                  <div className="relative h-full">
-                    <img 
-                      src={series[currentSlide].image} 
-                      alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
+          {/* Current Series Card */}
+          <div className="relative rounded-2xl overflow-hidden mb-4 shadow-2xl shadow-purple-500/20">
+            <div className="relative aspect-[16/9] md:aspect-[21/9]">
+              <img 
+                src={series[currentSlide].image}
+                alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+              
+              <div className={`absolute bottom-0 left-0 right-0 p-4 md:p-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                <h3 className="text-2xl md:text-4xl font-bold mb-2 text-white">
+                  {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
+                </h3>
+                <p className="text-sm md:text-base text-white/90 mb-3 line-clamp-2 md:line-clamp-3">
+                  {lang === 'en' ? series[currentSlide].subtitle : series[currentSlide].subtitleAr}
+                </p>
+                
+                {/* Dots */}
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  {series.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        index === currentSlide 
+                          ? 'bg-purple-500 w-8' 
+                          : 'bg-white/40 w-2'
+                      }`}
+                      aria-label={`Slide ${index + 1}`}
                     />
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    
-                    <div className={`absolute bottom-0 left-0 right-0 p-4 md:p-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                      <h3 className="text-xl md:text-2xl font-bold mb-2 text-white" style={{ fontFamily: 'Arial, sans-serif' }}>
-                        {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                      </h3>
-                      <p className="text-xs md:text-sm text-white/80 mb-3 line-clamp-3">
-                        {lang === 'en' ? series[currentSlide].subtitle : series[currentSlide].subtitleAr}
-                      </p>
-                      
-                      <div className="flex items-center justify-center gap-2 mb-4">
-                        {series.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentSlide(index)}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              index === currentSlide 
-                                ? 'bg-purple-500 w-6' 
-                                : 'bg-white/40'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-3xl z-30"></div>
+                  ))}
                 </div>
               </div>
-
-              <div className="absolute -inset-4 bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-purple-600/30 rounded-[4rem] blur-2xl -z-10"></div>
             </div>
           </div>
 
+          {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-base md:text-lg lg:text-xl font-bold px-8 md:px-12 py-3 md:py-4 rounded-full transition-all duration-300 shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-105 active:scale-95"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg md:text-xl font-bold py-4 rounded-full transition-all duration-300 shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-[1.02] active:scale-95 mb-6"
           >
             {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
           </button>
+
+          {/* Other Series - Horizontal Scroll */}
+          <div className="mt-8">
+            <h3 className={`text-xl md:text-2xl font-bold mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+              {lang === 'en' ? 'More Series' : 'المزيد من المسلسلات'}
+            </h3>
+            
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+              {series.map((show, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`flex-shrink-0 w-48 md:w-64 snap-start rounded-xl overflow-hidden transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'ring-4 ring-purple-500 scale-105' 
+                      : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <div className="relative aspect-[2/3]">
+                    <img 
+                      src={show.image}
+                      alt={lang === 'en' ? show.title : show.titleAr}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    <div className={`absolute bottom-0 left-0 right-0 p-3 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                      <p className="font-bold text-sm line-clamp-2">
+                        {lang === 'en' ? show.title : show.titleAr}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
         </div>
       </main>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   )
 }
