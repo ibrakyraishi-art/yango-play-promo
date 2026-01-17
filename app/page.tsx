@@ -117,79 +117,97 @@ function YangoContent() {
       <main className="relative z-10 px-4 md:px-12 py-4 md:py-8">
         <div className="max-w-6xl mx-auto">
           
-          {/* Featured Series - Main Card */}
-          <div className={`mb-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-            <h2 className="text-2xl md:text-4xl font-black mb-3" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+          <div className={`mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+            <h2 className="text-xl md:text-3xl font-black mb-2" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
               {lang === 'en' ? 'FREE 60 DAYS' : '60 يومًا مجانًا'}
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white/70 text-xs md:text-sm">
               {lang === 'en' 
                 ? 'Get unlimited access to the best series'
                 : 'احصل على وصول غير محدود لأفضل المسلسلات'}
             </p>
           </div>
 
-          {/* Current Series Card */}
-          <div className="relative rounded-2xl overflow-hidden mb-4 shadow-2xl shadow-purple-500/20">
-            <div className="relative aspect-[16/9] md:aspect-[21/9]">
-              <img 
-                src={series[currentSlide].image}
-                alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-              
-              <div className={`absolute bottom-0 left-0 right-0 p-4 md:p-6 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                <h3 className="text-2xl md:text-4xl font-bold mb-2 text-white">
-                  {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                </h3>
-                <p className="text-sm md:text-base text-white/90 mb-3 line-clamp-2 md:line-clamp-3">
-                  {lang === 'en' ? series[currentSlide].subtitle : series[currentSlide].subtitleAr}
-                </p>
+          {/* Phone Mockup with Series */}
+          <div className="relative max-w-xs mx-auto mb-4">
+            <div className="relative aspect-[9/19.5] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl shadow-purple-500/30">
+              {/* Series Card - Vertical Poster Style */}
+              <div className="relative h-full w-full">
+                <img 
+                  src={series[currentSlide].image}
+                  alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  crossOrigin="anonymous"
+                />
                 
-                {/* Dots */}
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  {series.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentSlide(index)}
-                      className={`h-2 rounded-full transition-all ${
-                        index === currentSlide 
-                          ? 'bg-purple-500 w-8' 
-                          : 'bg-white/40 w-2'
-                      }`}
-                      aria-label={`Slide ${index + 1}`}
-                    />
-                  ))}
+                {/* Top Overlay with YANGO PLAY text */}
+                <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent pt-6 pb-12 px-4">
+                  <div className="text-center">
+                    <h3 className="text-xl font-black mb-1" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+                      YANGO PLAY
+                    </h3>
+                    <p className="text-sm opacity-90">
+                      {lang === 'en' ? '60 days for Free' : '60 يومًا مجانًا'}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Bottom Overlay with Title & Description */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-4 pb-6">
+                  <h4 className={`text-xl font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                    {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
+                  </h4>
+                  <p className={`text-xs opacity-80 line-clamp-3 mb-3 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                    {lang === 'en' ? series[currentSlide].subtitle : series[currentSlide].subtitleAr}
+                  </p>
+                  
+                  {/* Dots */}
+                  <div className="flex items-center justify-center gap-1.5">
+                    {series.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentSlide(index)}
+                        className={`h-1.5 rounded-full transition-all ${
+                          index === currentSlide 
+                            ? 'bg-purple-500 w-6' 
+                            : 'bg-white/40 w-1.5'
+                        }`}
+                        aria-label={`Slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+            
+            {/* Glow Effect */}
+            <div className="absolute -inset-2 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-purple-600/20 rounded-[3rem] blur-xl -z-10"></div>
           </div>
 
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-lg md:text-xl font-bold py-4 rounded-full transition-all duration-300 shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-[1.02] active:scale-95 mb-6"
+            className="w-full max-w-xs mx-auto block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-base md:text-lg font-bold py-3.5 rounded-full transition-all duration-300 shadow-xl shadow-purple-500/40 hover:shadow-purple-500/60 hover:scale-[1.02] active:scale-95 mb-6"
           >
             {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
           </button>
 
-          {/* Other Series - Horizontal Scroll */}
-          <div className="mt-8">
-            <h3 className={`text-xl md:text-2xl font-bold mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+          {/* Horizontal Gallery */}
+          <div className="mt-6">
+            <h3 className={`text-lg md:text-xl font-bold mb-3 px-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
               {lang === 'en' ? 'More Series' : 'المزيد من المسلسلات'}
             </h3>
             
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide -mx-4 px-4">
               {series.map((show, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`flex-shrink-0 w-48 md:w-64 snap-start rounded-xl overflow-hidden transition-all duration-300 ${
+                  className={`flex-shrink-0 w-28 md:w-36 snap-start rounded-xl overflow-hidden transition-all duration-300 ${
                     currentSlide === index 
-                      ? 'ring-4 ring-purple-500 scale-105' 
-                      : 'opacity-70 hover:opacity-100'
+                      ? 'ring-3 ring-purple-500 scale-105' 
+                      : 'opacity-60 hover:opacity-100'
                   }`}
                 >
                   <div className="relative aspect-[2/3]">
@@ -198,10 +216,11 @@ function YangoContent() {
                       alt={lang === 'en' ? show.title : show.titleAr}
                       className="w-full h-full object-cover"
                       loading="lazy"
+                      crossOrigin="anonymous"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div className={`absolute bottom-0 left-0 right-0 p-3 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                      <p className="font-bold text-sm line-clamp-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div className={`absolute bottom-0 left-0 right-0 p-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                      <p className="font-bold text-xs leading-tight line-clamp-2">
                         {lang === 'en' ? show.title : show.titleAr}
                       </p>
                     </div>
