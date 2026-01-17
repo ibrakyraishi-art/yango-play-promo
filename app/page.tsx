@@ -136,7 +136,7 @@ function YangoContent() {
           <div className="relative max-w-sm mx-auto mb-8 md:mb-12">
             <div className="relative p-1 rounded-[3rem] bg-gradient-to-br from-purple-500 via-pink-500 to-purple-600 shadow-2xl shadow-purple-500/50">
               <div className="bg-black rounded-[2.8rem] overflow-hidden">
-                <div className="relative aspect-[9/19.5] bg-gradient-to-b from-gray-900 to-black"
+                <div className="relative aspect-[9/19.5] bg-gradient-to-b from-gray-900 to-black">
                   <div className="absolute top-0 left-0 right-0 px-8 py-3 flex items-center justify-between text-white text-sm z-20">
                     <span className="font-semibold">05:07</span>
                     <div className="flex items-center gap-1">
