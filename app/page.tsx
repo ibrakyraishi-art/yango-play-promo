@@ -49,8 +49,8 @@ function YangoContent() {
       titleAr: 'ورود وشوكولاته',
       subtitle: 'Inspired by true events, Marwa, a high-profile TV host, crosses paths with a powerful lawyer live on air. A single spark pulls her into a world where personal feelings collide with public pressure.',
       subtitleAr: 'مستوحى من أحداث حقيقية - "مروة"، إعلامية شهيرة وجريئة تُقدّم برنامجاً على إحدى القنوات الفضائية المعروفة، وتُعرف بأسلوبها الصادم وصوتها العالي في كشف القضايا الجريئة.',
-      image: 'http://avatars.mds.yandex.net/get-ott/1534341/2a0000019aa6eabc78a058b306150187c102/orig',
-      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]', // Elegant dark blue-gray
+      image: '/posters/roses-chocolate.jpg',
+      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]',
       glowColor: 'bg-purple-500/15',
     },
     {
@@ -58,8 +58,8 @@ function YangoContent() {
       titleAr: '2 قهوة',
       subtitle: 'Yahya El-Wakeel, a well-known writer and media figure in his mid-thirties, comes from a wealthy Upper Egyptian family with a blend of modern thought and deep-rooted Egyptian values.',
       subtitleAr: 'يحيى الوكيل كاتب و إعلامي مشهور في منتصف الثلاثينات من جذور صعيدية وأسرة تعد من الأثرياء بالمدينة.. امتزجت أفكاره ما بين التحضر و التمسك بالقيم والتقاليد المصرية.',
-      image: 'http://avatars.mds.yandex.net/get-ott/1672343/2a0000019acae6671dc5dd251570b450214f/orig',
-      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]', // Same elegant dark
+      image: '/posters/2-coffee.jpg',
+      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]',
       glowColor: 'bg-blue-500/15',
     },
     {
@@ -67,8 +67,8 @@ function YangoContent() {
       titleAr: 'طليقتي',
       subtitle: 'Taha, a dangerous ex-convict, is set free from prison halfway through his sentence. Upon his release, Taha discovers that his wife had left him and married another man.',
       subtitleAr: '«طه» مسجون شديد الخطورة، على وشك الخروج من السجن بعد نصف المدة، ولكن تحت إشراف طبيبه النفسي «يوسف» للتأكد من حسن سيره وسلوكه.',
-      image: 'http://avatars.mds.yandex.net/get-ott/223007/2a0000019aee96578f0b14aeff1c98db1104/orig',
-      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]', // Same elegant dark
+      image: '/posters/ex-merati.jpg',
+      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]',
       glowColor: 'bg-pink-500/15',
     },
     {
@@ -76,8 +76,8 @@ function YangoContent() {
       titleAr: 'السادة الأفاضل',
       subtitle: 'After their father Galal dies, the Abu El Fadl family\'s quiet life collapses. Eldest son Tarek struggles with debts and strange artifacts.',
       subtitleAr: 'بعد وفاة الأب جلال، تنهار حياة عائلة أبو الفضل، فيتحمل طارق المسؤولية وحده ويعود حجازي من القاهرة ليجد عائلته أكبر أزماته.',
-      image: 'http://avatars.mds.yandex.net/get-ott/13051577/2a0000019b4b0ec3ea57b2cc625f55435a0b/orig',
-      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]', // Same elegant dark
+      image: '/posters/al-sada.jpg',
+      bgGradient: 'from-[#0f1419] via-[#1a1f2e] to-[#141824]',
       glowColor: 'bg-teal-500/15',
     },
   ]
@@ -146,7 +146,10 @@ function YangoContent() {
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   className="w-full h-full object-cover"
                   loading="eager"
-                  crossOrigin="anonymous"
+                  width="400"
+                  height="867"
+                  decoding="async"
+                  fetchPriority="high"
                 />
                 
                 {/* Top Overlay with YANGO PLAY text */}
@@ -224,7 +227,9 @@ function YangoContent() {
                       alt={lang === 'en' ? show.title : show.titleAr}
                       className="w-full h-full object-cover"
                       loading="lazy"
-                      crossOrigin="anonymous"
+                      width="150"
+                      height="225"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                     <div className={`absolute bottom-0 left-0 right-0 p-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
