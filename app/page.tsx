@@ -257,17 +257,21 @@ function YangoContent() {
                     </div>
                   </div>
                 )}
-              {/* Series Card - Vertical Poster Style */}
-              <div className="relative h-full w-full">
-                <img 
-                  key={currentSlide}
-                  src={series[currentSlide].image}
-                  alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                  className="w-full h-full object-cover animate-fadeIn"
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                />
+              {/* Series Card - Vertical Poster Style - Smooth crossfade without black screen */}
+              <div className="relative h-full w-full bg-black">
+                {series.map((show, index) => (
+                  <img 
+                    key={index}
+                    src={show.image}
+                    alt={lang === 'en' ? show.title : show.titleAr}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                      index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                  />
+                ))}
               </div>
                 
                 {/* Progress Bar */}
