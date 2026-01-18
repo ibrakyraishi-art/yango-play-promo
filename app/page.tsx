@@ -246,7 +246,7 @@ function YangoContent() {
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   fill
                   priority
-                  quality={85}
+                  quality={100}
                   sizes="(max-width: 768px) 320px, 400px"
                   className="object-cover"
                   placeholder="blur"
