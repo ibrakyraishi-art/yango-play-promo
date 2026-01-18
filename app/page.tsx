@@ -2,7 +2,6 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Image from 'next/image'
 
 function YangoContent() {
   const searchParams = useSearchParams()
@@ -241,16 +240,12 @@ function YangoContent() {
               >
               {/* Series Card - Vertical Poster Style */}
               <div className="relative h-full w-full transition-transform duration-500 ease-out">
-                <Image 
+                <img 
                   src={series[currentSlide].image}
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                  fill
-                  priority
-                  quality={100}
-                  sizes="(max-width: 768px) 320px, 400px"
-                  className="object-cover"
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="sync"
                 />
                 
                 {/* Progress Bar */}
