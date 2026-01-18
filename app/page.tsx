@@ -245,7 +245,7 @@ function YangoContent() {
                   ))}
                 </div>
                 
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/85 to-transparent p-4 pb-5">
+                <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/95 via-black/85 to-transparent p-4 pb-5">
                   <h4 className={`text-lg font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                     {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   </h4>
