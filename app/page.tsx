@@ -40,14 +40,15 @@ function YangoContent() {
     }
   }, [searchParams])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!expanded) {
-        setCurrentSlide((prev) => (prev + 1) % series.length)
-      }
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [expanded])
+  // Auto-slide disabled to prevent epilepsy issues
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!expanded) {
+  //       setCurrentSlide((prev) => (prev + 1) % series.length)
+  //     }
+  //   }, 6000)
+  //   return () => clearInterval(interval)
+  // }, [expanded])
 
   const minSwipeDistance = 40
 
@@ -210,49 +211,6 @@ function YangoContent() {
           {/* Phone Mockup with Series */}
           <div className="relative max-w-[320px] mx-auto mb-4">
             
-            {/* Navigation Arrows - hidden on mobile */}
-            <button
-              onClick={prevSlide}
-              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
-              aria-label="Previous"
-            >
-              <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={nextSlide}
-              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
-              aria-label="Next"
-            >
-              <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Swipe indicator */}
-            {swipeDirection && (
-              <div className={`absolute top-1/2 -translate-y-1/2 z-30 pointer-events-none transition-all duration-200 ${swipeDirection === 'left' ? 'right-8 animate-bounce' : 'left-8 animate-bounce'}`}>
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500/40 to-pink-500/40 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-8 h-8" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d={swipeDirection === 'left' ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
-                  </svg>
-                </div>
-              </div>
-            )}
-
-            {/* Tap zones for navigation */}
-            <button
-              onClick={prevSlide}
-              className="md:hidden absolute left-0 top-1/4 bottom-1/4 w-16 z-10"
-              aria-label="Previous"
-            />
-            <button
-              onClick={nextSlide}
-              className="md:hidden absolute right-0 top-1/4 bottom-1/4 w-16 z-10"
-              aria-label="Next"
-            />
-
             {/* Phone Frame with beautiful design */}
             <div className="relative p-2 rounded-[2.5rem] bg-gradient-to-br from-purple-500/20 via-fuchsia-500/20 to-pink-500/20 shadow-2xl shadow-purple-500/30">
               <div 
@@ -261,6 +219,36 @@ function YangoContent() {
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
               >
+                {/* Navigation Arrows INSIDE phone */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group border border-white/20 shadow-lg"
+                  aria-label="Previous"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group border border-white/20 shadow-lg"
+                  aria-label="Next"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Swipe indicator */}
+                {swipeDirection && (
+                  <div className={`absolute top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${swipeDirection === 'left' ? 'right-16' : 'left-16'}`}>
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500/60 to-pink-500/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      <svg className="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d={swipeDirection === 'left' ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+                      </svg>
+                    </div>
+                  </div>
+                )}
               {/* Series Card - Vertical Poster Style */}
               <div className="relative h-full w-full">
                 <img 
