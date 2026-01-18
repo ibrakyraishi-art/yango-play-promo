@@ -2,8 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Yango Play - Free 60 Days',
-  description: 'Get 60 days free access to the best series on Yango Play',
+  title: 'Yango Play',
+  description: 'Watch the best Arabic series on Yango Play',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({

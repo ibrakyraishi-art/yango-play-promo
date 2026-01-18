@@ -138,8 +138,7 @@ function YangoContent() {
             <div className="flex items-center gap-2">
               <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
                 <circle cx="16" cy="16" r="16" fill="url(#gradient)" />
-                <path d="M16 8L20 14H12L16 8Z" fill="white" />
-                <path d="M16 24L12 18H20L16 24Z" fill="white" />
+                <circle cx="16" cy="16" r="6" fill="white" />
                 <defs>
                   <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
                     <stop offset="0%" stopColor="#a855f7" />
@@ -292,7 +291,7 @@ function YangoContent() {
             onClick={handleDownload}
             className="w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/60 hover:scale-[1.02] active:scale-98 border border-purple-400/20"
           >
-            {lang === 'en' ? '⬇ Download App' : 'تحميل التطبيق ⬇'}
+            {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
           </button>
 
           {/* Hint */}
