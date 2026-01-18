@@ -149,13 +149,16 @@ function YangoContent() {
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="16" fill="url(#gradient)" />
-                <circle cx="16" cy="16" r="6" fill="white" />
+              <svg className="w-9 h-9" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="url(#iconGradient)"/>
+                <path d="M20 10L24 16L20 16L20 10Z" fill="white" opacity="0.9"/>
+                <circle cx="20" cy="22" r="4" fill="white"/>
+                <path d="M20 30L16 24L20 24L20 30Z" fill="white" opacity="0.9"/>
                 <defs>
-                  <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
-                    <stop offset="0%" stopColor="#a855f7" />
-                    <stop offset="100%" stopColor="#ec4899" />
+                  <linearGradient id="iconGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#9333ea"/>
+                    <stop offset="50%" stopColor="#c026d3"/>
+                    <stop offset="100%" stopColor="#ec4899"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -311,12 +314,19 @@ function YangoContent() {
             </div>
           </div>
 
-          {/* Download Button */}
+          {/* Watch Now Button with Series Name */}
           <button
             onClick={handleDownload}
-            className="relative w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/70 hover:scale-[1.03] active:scale-95 border border-purple-400/30 overflow-hidden group"
+            className="relative w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/70 hover:scale-[1.03] active:scale-95 border border-purple-400/30 overflow-hidden group"
           >
-            <span className="relative z-10">{lang === 'en' ? 'Download App' : 'تحميل التطبيق'}</span>
+            <span className="relative z-10 flex flex-col items-center gap-1">
+              <span className="text-sm opacity-90">
+                {lang === 'en' ? 'Watch Now' : 'شاهد الآن'}
+              </span>
+              <span className="text-xs font-normal opacity-80">
+                {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
+              </span>
+            </span>
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
           </button>
 
