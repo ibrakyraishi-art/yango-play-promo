@@ -45,7 +45,7 @@ function YangoContent() {
       if (!expanded) {
         setCurrentSlide((prev) => (prev + 1) % series.length)
       }
-    }, 5000)
+    }, 6000)
     return () => clearInterval(interval)
   }, [expanded])
 
@@ -128,9 +128,9 @@ function YangoContent() {
 
   return (
     <div className="min-h-screen bg-[#0a0a14] text-white relative overflow-hidden">
-      {/* Gradient Orbs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/30 via-fuchsia-600/20 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tl from-pink-600/20 via-purple-600/20 to-transparent rounded-full blur-3xl"></div>
+      {/* Gradient Orbs - hidden on mobile for performance */}
+      <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/30 via-fuchsia-600/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="hidden md:block absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tl from-pink-600/20 via-purple-600/20 to-transparent rounded-full blur-3xl"></div>
       
       <header className="relative z-10 py-4 px-4">
         <div className="max-w-md mx-auto">
@@ -151,7 +151,7 @@ function YangoContent() {
               </h1>
             </div>
             
-            <div className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-full p-0.5 border border-white/10">
+            <div className="flex items-center gap-1.5 bg-white/5 rounded-full p-0.5 border border-white/10">
               <button
                 onClick={() => setLang('en')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
@@ -189,7 +189,7 @@ function YangoContent() {
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 backdrop-blur-md rounded-full flex items-center justify-center transition-all group border border-white/10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 rounded-full flex items-center justify-center transition-all group border border-white/10"
               aria-label="Previous"
             >
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +198,7 @@ function YangoContent() {
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 backdrop-blur-md rounded-full flex items-center justify-center transition-all group border border-white/10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 rounded-full flex items-center justify-center transition-all group border border-white/10"
               aria-label="Next"
             >
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -219,9 +219,11 @@ function YangoContent() {
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   fill
                   priority
-                  quality={75}
-                  sizes="300px"
+                  quality={60}
+                  sizes="(max-width: 768px) 320px, 400px"
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
                 />
                 
                 {/* Progress Bar */}
@@ -236,7 +238,7 @@ function YangoContent() {
                 </div>
                 
                 {/* Bottom Overlay with Description */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-4 pb-5 backdrop-blur-sm">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/85 to-transparent p-4 pb-5">
                   <h4 className={`text-lg font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                     {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   </h4>

@@ -16,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/posters/roses-chocolate.jpg" as="image" />
+      </head>
       <body>{children}</body>
     </html>
   )
