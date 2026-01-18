@@ -92,9 +92,6 @@ function YangoContent() {
       fullDesc: 'Inspired by true events, Marwa, a high-profile TV host, crosses paths with a powerful lawyer live on air. A single spark pulls her into a world where personal feelings collide with public pressure. As the spotlight intensifies and power games escalate, she must decide how far she will go - and whom she can trust - without losing her voice.',
       fullDescAr: 'مستوحى من أحداث حقيقية - "مروة"، إعلامية شهيرة وجريئة تُقدّم برنامجاً على إحدى القنوات الفضائية المعروفة، وتُعرف بأسلوبها الصادم وصوتها العالي في كشف القضايا الجريئة. تلتقي خلال إحدى حلقاتها بمحامٍ نافذ يُدعى "صلاح"، ويتسبب لقاؤهما في تغيير حياتها جذرياً، إذ تقع في حبه رغم ماضيه الغامض، ما يضعها في صراع بين قلبها ومهنتها.',
       image: '/posters/roses-chocolate.jpg',
-      bgGradient: 'from-rose-950 via-pink-950 to-purple-950',
-      accentColor: 'from-rose-500 to-pink-600',
-      glowColor: 'shadow-rose-500/30',
     },
     {
       title: '2 Coffee',
@@ -104,9 +101,6 @@ function YangoContent() {
       fullDesc: 'Yahya El-Wakeel, a well-known writer and media figure in his mid-thirties, comes from a wealthy Upper Egyptian family with a blend of modern thought and deep-rooted Egyptian values and traditions. He falls in love with Nelly Naseem, an aristocratic woman who owns a classy café in Zamalek. Over time, fundamental differences in their worldviews begin to surface. In addition, his ex-wife unexpectedly returns, determined to win back both her husband and their daughter.',
       fullDescAr: 'يحيى الوكيل كاتب و إعلامي مشهور في منتصف الثلاثينات من جذور صعيدية وأسرة تعد من الأثرياء بالمدينة.. امتزجت أفكاره ما بين التحضر و التمسك بالقيم والتقاليد المصرية. يقع في حب فتاة أرستقراطية تدعى نيللي نسيم تمتلك كافيه راقي بمنطقة الزمالك و وتبادله نفس المشاعر، ولكن يكتشفان أختلاف في أفكارهم مع مرور الوقت، ويزداد الأمر صعوبة بعد أن تعود طليقة يحيي وهي راغبة في العودة إلى زوجها و ابنتها.',
       image: '/posters/2-coffee.jpg',
-      bgGradient: 'from-amber-950 via-orange-950 to-yellow-950',
-      accentColor: 'from-amber-500 to-yellow-600',
-      glowColor: 'shadow-amber-500/30',
     },
     {
       title: 'Ex-Merati',
@@ -116,9 +110,6 @@ function YangoContent() {
       fullDesc: 'Taha, a dangerous ex-convict, is set free from prison halfway through his sentence, under the watchful eye of his psychiatrist, Dr. Youssef. Upon his release, Taha discovers that his wife had left him upon his conviction and married another man. Enraged, Taha seeks revenge on his ex-wife Sahar, whom he still loves, as well as her husband. Little does he know that her husband is none other than… Dr. Youssef himself!',
       fullDescAr: '«طه» مسجون شديد الخطورة، على وشك الخروج من السجن بعد نصف المدة، ولكن تحت إشراف طبيبه النفسي «يوسف» للتأكد من حسن سيره وسلوكه. فور خروجه يتوعد بالانتقام من طليقته «سحر» وزوجها الحالي. طه ما زال يحبها، ولكنه لا يعلم أن زوجها ما هو إلا… الدكتور يوسف.',
       image: '/posters/ex-merati.jpg',
-      bgGradient: 'from-yellow-950 via-lime-950 to-emerald-950',
-      accentColor: 'from-yellow-500 to-lime-600',
-      glowColor: 'shadow-yellow-500/30',
     },
     {
       title: 'Al Sada Al Afadel',
@@ -128,9 +119,6 @@ function YangoContent() {
       fullDesc: 'After their father Galal dies, the Abu El Fadl family faces collapse. Eldest son Tarek struggles with debts and strange artifacts, while Hegazy returns from Cairo, only to find his troubled family harder to handle than his patients — especially after the mysterious Samir Italia appears, demanding a large sum of money.',
       fullDescAr: 'بعد وفاة الأب جلال، تنهار حياة عائلة أبو الفضل، فيتحمل طارق المسؤولية وحده ويعود حجازي من القاهرة ليجد عائلته أكبر أزماته. يزيد الغموض مع ظهور سمير إيطاليا المطالب بمال ضخم، لتتحول ديون الأب والتحف المشبوهة إلى سلسلة متاعب لا تنتهي.',
       image: '/posters/al-sada.jpg',
-      bgGradient: 'from-cyan-950 via-teal-950 to-emerald-950',
-      accentColor: 'from-cyan-500 to-teal-600',
-      glowColor: 'shadow-cyan-500/30',
     },
   ]
 
@@ -139,7 +127,7 @@ function YangoContent() {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${series[currentSlide].bgGradient} text-white relative overflow-hidden transition-all duration-700`}>
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-fuchsia-950 to-indigo-950 text-white relative overflow-hidden">
       
       <header className="relative z-10 py-3 px-4 md:py-5">
         <div className="max-w-md mx-auto">
@@ -204,7 +192,7 @@ function YangoContent() {
             </button>
 
             <div 
-              className={`relative aspect-[9/19.5] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl ${series[currentSlide].glowColor} transition-all duration-700`}
+              className="relative aspect-[9/19.5] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl shadow-purple-500/30"
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
@@ -247,7 +235,7 @@ function YangoContent() {
                   
                   <button
                     onClick={() => setExpanded(!expanded)}
-                    className={`text-xs font-semibold bg-gradient-to-r ${series[currentSlide].accentColor} bg-clip-text text-transparent hover:opacity-80 transition-opacity ${lang === 'ar' ? 'float-right' : 'float-left'}`}
+                    className={`text-xs font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity ${lang === 'ar' ? 'float-right' : 'float-left'}`}
                   >
                     {expanded 
                       ? (lang === 'en' ? '← Show less' : 'أقل ←')
@@ -266,7 +254,7 @@ function YangoContent() {
                         }}
                         className={`h-1.5 rounded-full transition-all ${
                           index === currentSlide 
-                            ? `bg-gradient-to-r ${series[currentSlide].accentColor} w-8` 
+                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-8' 
                             : 'bg-white/40 w-1.5 hover:bg-white/60'
                         }`}
                         aria-label={`Series ${index + 1}`}
@@ -286,7 +274,7 @@ function YangoContent() {
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className={`w-full max-w-[300px] mx-auto block bg-gradient-to-r ${series[currentSlide].accentColor} hover:opacity-90 text-white text-base font-bold py-3.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95`}
+            className="w-full max-w-[300px] mx-auto block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-base font-bold py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 hover:scale-[1.02] active:scale-95"
           >
             {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
           </button>
