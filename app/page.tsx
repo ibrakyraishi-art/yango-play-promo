@@ -196,19 +196,15 @@ function YangoContent() {
   }, [])
 
   const handleDownload = () => {
-    // Google Ads Conversion
+    // Google Ads Conversion tracking
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'conversion', {
-        'send_to': 'AW-XXXXXXXXXX/YYYYYYYYY',
-        'value': 1.0,
-        'currency': 'USD',
-        'event_callback': function() {
-          window.location.href = oneLinkUrl
-        }
-      })
-    } else {
-      window.location.href = oneLinkUrl
+        send_to: 'AW-XXXXXXXXXX/YYYYYYYYY',
+        value: 1.0,
+        currency: 'USD'
+      });
     }
+    window.location.href = oneLinkUrl;
   }
 
   return (
