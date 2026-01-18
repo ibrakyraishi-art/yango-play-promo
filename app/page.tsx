@@ -49,7 +49,7 @@ function YangoContent() {
     return () => clearInterval(interval)
   }, [expanded])
 
-  const minSwipeDistance = 30
+  const minSwipeDistance = 40
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
@@ -63,7 +63,7 @@ function YangoContent() {
     
     if (touchStart) {
       const distance = touchStart - currentTouch
-      if (Math.abs(distance) > 10) {
+      if (Math.abs(distance) > 15) {
         setSwipeDirection(distance > 0 ? 'left' : 'right')
       }
     }
@@ -75,15 +75,17 @@ function YangoContent() {
       return
     }
     const distance = touchStart - touchEnd
+    const velocity = Math.abs(distance)
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
-    if (isLeftSwipe) {
+    
+    if (isLeftSwipe || (distance > 20 && velocity > 30)) {
       nextSlide()
-    }
-    if (isRightSwipe) {
+    } else if (isRightSwipe || (distance < -20 && velocity > 30)) {
       prevSlide()
     }
-    setSwipeDirection(null)
+    
+    setTimeout(() => setSwipeDirection(null), 200)
   }
 
   const nextSlide = () => {
@@ -208,10 +210,10 @@ function YangoContent() {
           {/* Phone Mockup with Series */}
           <div className="relative max-w-[320px] mx-auto mb-4">
             
-            {/* Navigation Arrows with haptic feedback */}
+            {/* Navigation Arrows - hidden on mobile */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full flex items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
               aria-label="Previous"
             >
               <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -220,7 +222,7 @@ function YangoContent() {
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full flex items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
               aria-label="Next"
             >
               <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -230,14 +232,26 @@ function YangoContent() {
 
             {/* Swipe indicator */}
             {swipeDirection && (
-              <div className={`absolute top-1/2 -translate-y-1/2 z-30 pointer-events-none ${swipeDirection === 'left' ? 'right-4' : 'left-4'}`}>
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-pulse">
-                  <svg className="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={3}>
+              <div className={`absolute top-1/2 -translate-y-1/2 z-30 pointer-events-none transition-all duration-200 ${swipeDirection === 'left' ? 'right-8 animate-bounce' : 'left-8 animate-bounce'}`}>
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500/40 to-pink-500/40 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-8 h-8" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d={swipeDirection === 'left' ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
                   </svg>
                 </div>
               </div>
             )}
+
+            {/* Tap zones for navigation */}
+            <button
+              onClick={prevSlide}
+              className="md:hidden absolute left-0 top-1/4 bottom-1/4 w-16 z-10"
+              aria-label="Previous"
+            />
+            <button
+              onClick={nextSlide}
+              className="md:hidden absolute right-0 top-1/4 bottom-1/4 w-16 z-10"
+              aria-label="Next"
+            />
 
             {/* Phone Frame with beautiful design */}
             <div className="relative p-2 rounded-[2.5rem] bg-gradient-to-br from-purple-500/20 via-fuchsia-500/20 to-pink-500/20 shadow-2xl shadow-purple-500/30">
@@ -248,13 +262,14 @@ function YangoContent() {
                 onTouchEnd={onTouchEnd}
               >
               {/* Series Card - Vertical Poster Style */}
-              <div className="relative h-full w-full transition-transform duration-500 ease-out">
+              <div className="relative h-full w-full">
                 <img 
-                  src={series[currentSlide].image}
+                  key={currentSlide}
+                  src={`${series[currentSlide].image}?v=${Date.now()}`}
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover animate-fadeIn"
                   loading="eager"
-                  decoding="sync"
+                  decoding="async"
                 />
                 
                 {/* Progress Bar */}
