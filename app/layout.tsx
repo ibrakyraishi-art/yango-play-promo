@@ -17,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preload" href="/posters/roses-chocolate.jpg" as="image" />
+        {/* Preload all series posters for instant switching */}
+        <link rel="preload" href="/posters/roses-chocolate.jpg" as="image" fetchPriority="high" />
+        <link rel="preload" href="/posters/2-coffee.jpg" as="image" />
+        <link rel="preload" href="/posters/ex-merati.jpg" as="image" />
+        <link rel="preload" href="/posters/al-sada.jpg" as="image" />
         {/* Google Ads */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX"></script>
         <script

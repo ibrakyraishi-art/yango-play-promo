@@ -40,6 +40,14 @@ function YangoContent() {
     }
   }, [searchParams])
 
+  // Preload all images for instant switching
+  useEffect(() => {
+    series.forEach((show) => {
+      const img = new Image()
+      img.src = show.image
+    })
+  }, [])
+
   // Auto-slide disabled to prevent epilepsy issues
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -253,12 +261,14 @@ function YangoContent() {
               <div className="relative h-full w-full">
                 <img 
                   key={currentSlide}
-                  src={`${series[currentSlide].image}?v=${Date.now()}`}
+                  src={series[currentSlide].image}
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   className="w-full h-full object-cover animate-fadeIn"
                   loading="eager"
                   decoding="async"
+                  fetchPriority="high"
                 />
+              </div>
                 
                 {/* Progress Bar */}
                 <div className="absolute top-3 left-3 right-3 z-10 flex gap-1.5">
