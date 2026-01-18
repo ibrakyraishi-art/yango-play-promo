@@ -138,16 +138,6 @@ function YangoContent() {
     setTimeout(() => setSwipeDirection(null), 200)
   }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % series.length)
-    setExpanded(false)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + series.length) % series.length)
-    setExpanded(false)
-  }
-
   const series = [
     {
       title: 'Roses and Chocolate',
@@ -186,6 +176,16 @@ function YangoContent() {
       image: '/posters/al-sada.jpg',
     },
   ]
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % series.length)
+    setExpanded(false)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + series.length) % series.length)
+    setExpanded(false)
+  }
 
   // Preload all images for instant switching
   useEffect(() => {
