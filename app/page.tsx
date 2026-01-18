@@ -136,7 +136,19 @@ function YangoContent() {
   ]
 
   const handleDownload = () => {
-    window.location.href = oneLinkUrl
+    // Google Ads Conversion
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-XXXXXXXXXX/YYYYYYYYY',
+        'value': 1.0,
+        'currency': 'USD',
+        'event_callback': function() {
+          window.location.href = oneLinkUrl
+        }
+      })
+    } else {
+      window.location.href = oneLinkUrl
+    }
   }
 
   return (
@@ -149,17 +161,11 @@ function YangoContent() {
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <svg className="w-10 h-10 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="url(#yangoGrad)"/>
-                <path d="M20 12L26 20L20 28L14 20L20 12Z" fill="white"/>
-                <defs>
-                  <linearGradient id="yangoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#a855f7"/>
-                    <stop offset="50%" stopColor="#d946ef"/>
-                    <stop offset="100%" stopColor="#ec4899"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 via-fuchsia-600 to-pink-600 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5L16 12L8 19V5Z" fill="white"/>
+                </svg>
+              </div>
               <img 
                 src="/posters/yango play – one line – black.png" 
                 alt="Yango Play" 
