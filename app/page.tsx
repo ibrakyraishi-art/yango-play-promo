@@ -99,45 +99,6 @@ function YangoContent() {
   //   return () => clearInterval(interval)
   // }, [expanded])
 
-  const minSwipeDistance = 40
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
-    setSwipeDirection(null)
-  }
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    const currentTouch = e.targetTouches[0].clientX
-    setTouchEnd(currentTouch)
-    
-    if (touchStart) {
-      const distance = touchStart - currentTouch
-      if (Math.abs(distance) > 15) {
-        setSwipeDirection(distance > 0 ? 'left' : 'right')
-      }
-    }
-  }
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) {
-      setSwipeDirection(null)
-      return
-    }
-    const distance = touchStart - touchEnd
-    const velocity = Math.abs(distance)
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
-    
-    if (isLeftSwipe || (distance > 20 && velocity > 30)) {
-      nextSlide()
-    } else if (isRightSwipe || (distance < -20 && velocity > 30)) {
-      prevSlide()
-    }
-    
-    setTimeout(() => setSwipeDirection(null), 200)
-  }
-
   const series = [
     {
       title: 'Roses and Chocolate',
@@ -185,6 +146,45 @@ function YangoContent() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + series.length) % series.length)
     setExpanded(false)
+  }
+
+  const minSwipeDistance = 40
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+    setSwipeDirection(null)
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    const currentTouch = e.targetTouches[0].clientX
+    setTouchEnd(currentTouch)
+    
+    if (touchStart) {
+      const distance = touchStart - currentTouch
+      if (Math.abs(distance) > 15) {
+        setSwipeDirection(distance > 0 ? 'left' : 'right')
+      }
+    }
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      setSwipeDirection(null)
+      return
+    }
+    const distance = touchStart - touchEnd
+    const velocity = Math.abs(distance)
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe || (distance > 20 && velocity > 30)) {
+      nextSlide()
+    } else if (isRightSwipe || (distance < -20 && velocity > 30)) {
+      prevSlide()
+    }
+    
+    setTimeout(() => setSwipeDirection(null), 200)
   }
 
   // Preload all images for instant switching
