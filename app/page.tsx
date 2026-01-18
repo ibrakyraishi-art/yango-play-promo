@@ -175,14 +175,6 @@ function YangoContent() {
     setTimeout(() => setSwipeDirection(null), 200)
   }
 
-  // Preload all images for instant switching
-  useEffect(() => {
-    series.forEach((show) => {
-      const img = new Image()
-      img.src = show.image
-    })
-  }, [])
-
   const handleDownload = () => {
     // Google Ads Conversion tracking
     if (typeof window !== 'undefined' && (window as any).gtag) {
