@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 
 function YangoContent() {
   const searchParams = useSearchParams()
-  const [oneLinkUrl, setOneLinkUrl] = useState('https://play.yango.com')
+  const [oneLinkUrl, setOneLinkUrl] = useState('https://yangoplay.onelink.me/ZSw2/eslls7kl?pid=googleads_int&c=YangoPlay_W2A_RET&af_siteid=google_w2a&af_channel=google_w2a&is_retargeting=true&af_inactivity_window=7d&af_reengagement_window=7d&af_click_lookback=7d')
   const [currentSlide, setCurrentSlide] = useState(0)
   const [lang, setLang] = useState<'en' | 'ar'>('en')
   const [expanded, setExpanded] = useState(false)
@@ -20,24 +20,73 @@ function YangoContent() {
     const utmTerm = searchParams.get('utm_term') || ''
     const utmContent = searchParams.get('utm_content') || ''
     const gclid = searchParams.get('gclid') || ''
+    const gbraid = searchParams.get('gbraid') || ''
+    const wbraid = searchParams.get('wbraid') || ''
 
-    if (utmSource || utmCampaign || gclid) {
-      const oneLinkBase = 'https://yango.onelink.me/XXXXX'
-      const params = new URLSearchParams()
-      
-      if (utmSource) params.append('pid', utmSource)
-      if (utmCampaign) params.append('c', utmCampaign)
-      if (utmTerm) params.append('af_keywords', utmTerm)
-      if (utmContent) params.append('af_adset', utmContent)
-      if (gclid) params.append('af_ad', gclid)
-      if (utmMedium) params.append('af_channel', utmMedium)
-      
-      const finalUrl = `${oneLinkBase}?${params.toString()}`
-      setOneLinkUrl(finalUrl)
-      
-      console.log('📊 UTM captured:', { utmSource, utmCampaign, gclid })
-      console.log('🔗 AppsFlyer:', finalUrl)
+    // Smart Script: Parse utm_term for dynamic parameters
+    let cid = '', gid = '', adid = '', tid = '', kw = '', mtype = '', device = ''
+    
+    if (utmTerm) {
+      // Parse utm_term like: cid_{campaignid}|gid_{adgroupid}|adid_{creative}|tid_{targetid}|kw_{keyword}|mtype_{matchtype}|d_{device}|{random}
+      const termParts = utmTerm.split('|')
+      termParts.forEach(part => {
+        if (part.startsWith('cid_')) cid = part.replace('cid_', '')
+        else if (part.startsWith('gid_')) gid = part.replace('gid_', '')
+        else if (part.startsWith('adid_')) adid = part.replace('adid_', '')
+        else if (part.startsWith('tid_')) tid = part.replace('tid_', '')
+        else if (part.startsWith('kw_')) kw = part.replace('kw_', '')
+        else if (part.startsWith('mtype_')) mtype = part.replace('mtype_', '')
+        else if (part.startsWith('d_')) device = part.replace('d_', '')
+      })
     }
+
+    // Build dynamic OneLink URL
+    const oneLinkBase = 'https://yangoplay.onelink.me/ZSw2/eslls7kl'
+    const params = new URLSearchParams()
+    
+    // Main parameters
+    if (utmSource) params.append('pid', utmSource)
+    if (utmCampaign) params.append('c', utmCampaign)
+    
+    // Google Ads dynamic parameters
+    if (gid) params.append('af_adset', gid) // adgroup ID
+    if (adid) params.append('af_ad', adid) // creative ID
+    if (kw) params.append('af_keyword', kw) // keyword
+    
+    // Additional sub parameters for debugging
+    if (tid) params.append('af_sub1', tid) // target ID
+    if (mtype) params.append('af_sub2', mtype) // match type
+    if (device) params.append('af_sub3', device) // device
+    if (utmMedium) params.append('af_sub4', utmMedium) // medium
+    if (utmContent) params.append('af_sub5', utmContent) // content/creative
+    
+    // Google Click IDs
+    if (gclid) params.append('gclid', gclid)
+    if (gbraid) params.append('gbraid', gbraid)
+    if (wbraid) params.append('wbraid', wbraid)
+    
+    // Static retargeting parameters
+    params.append('af_siteid', 'google_w2a')
+    params.append('af_channel', 'google_w2a')
+    params.append('is_retargeting', 'true')
+    params.append('af_inactivity_window', '7d')
+    params.append('af_reengagement_window', '7d')
+    params.append('af_click_lookback', '7d')
+    
+    const finalUrl = `${oneLinkBase}?${params.toString()}`
+    setOneLinkUrl(finalUrl)
+    
+    console.log('🎯 Smart Script - Parsed UTM:', {
+      source: utmSource,
+      campaign: utmCampaign,
+      campaignId: cid,
+      adgroupId: gid,
+      creativeId: adid,
+      keyword: kw,
+      matchType: mtype,
+      device: device
+    })
+    console.log('🔗 OneLink Generated:', finalUrl)
   }, [searchParams])
 
   // Preload all images for instant switching
