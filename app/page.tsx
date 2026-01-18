@@ -89,14 +89,6 @@ function YangoContent() {
     console.log('🔗 OneLink Generated:', finalUrl)
   }, [searchParams])
 
-  // Preload all images for instant switching
-  useEffect(() => {
-    series.forEach((show) => {
-      const img = new Image()
-      img.src = show.image
-    })
-  }, [])
-
   // Auto-slide disabled to prevent epilepsy issues
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -194,6 +186,14 @@ function YangoContent() {
       image: '/posters/al-sada.jpg',
     },
   ]
+
+  // Preload all images for instant switching
+  useEffect(() => {
+    series.forEach((show) => {
+      const img = new Image()
+      img.src = show.image
+    })
+  }, [])
 
   const handleDownload = () => {
     // Google Ads Conversion
