@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 
 function YangoContent() {
   const searchParams = useSearchParams()
-  const [oneLinkUrl, setOneLinkUrl] = useState('https://yangoplay.onelink.me/ZSw2/eslls7kl?pid=googleads_int&c=YangoPlay_W2A_RET&af_siteid=google_w2a&af_channel=google_w2a&is_retargeting=true&af_inactivity_window=7d&af_reengagement_window=7d&af_click_lookback=7d')
+  const [oneLinkUrl, setOneLinkUrl] = useState('https://yangoplay.onelink.me/ZSw2/eslls7kl')
   const [currentSlide, setCurrentSlide] = useState(0)
   const [lang, setLang] = useState<'en' | 'ar'>('en')
   const [expanded, setExpanded] = useState(false)
@@ -13,79 +13,40 @@ function YangoContent() {
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null)
 
+  // Smart Script - simplified version
   useEffect(() => {
-    const utmSource = searchParams.get('utm_source') || ''
-    const utmMedium = searchParams.get('utm_medium') || ''
-    const utmCampaign = searchParams.get('utm_campaign') || ''
-    const utmTerm = searchParams.get('utm_term') || ''
-    const utmContent = searchParams.get('utm_content') || ''
-    const gclid = searchParams.get('gclid') || ''
-    const gbraid = searchParams.get('gbraid') || ''
-    const wbraid = searchParams.get('wbraid') || ''
-
-    // Smart Script: Parse utm_term for dynamic parameters
-    let cid = '', gid = '', adid = '', tid = '', kw = '', mtype = '', device = ''
-    
-    if (utmTerm) {
-      // Parse utm_term like: cid_{campaignid}|gid_{adgroupid}|adid_{creative}|tid_{targetid}|kw_{keyword}|mtype_{matchtype}|d_{device}|{random}
-      const termParts = utmTerm.split('|')
-      termParts.forEach(part => {
-        if (part.startsWith('cid_')) cid = part.replace('cid_', '')
-        else if (part.startsWith('gid_')) gid = part.replace('gid_', '')
-        else if (part.startsWith('adid_')) adid = part.replace('adid_', '')
-        else if (part.startsWith('tid_')) tid = part.replace('tid_', '')
-        else if (part.startsWith('kw_')) kw = part.replace('kw_', '')
-        else if (part.startsWith('mtype_')) mtype = part.replace('mtype_', '')
-        else if (part.startsWith('d_')) device = part.replace('d_', '')
-      })
-    }
-
-    // Build dynamic OneLink URL
-    const oneLinkBase = 'https://yangoplay.onelink.me/ZSw2/eslls7kl'
+    const baseUrl = 'https://yangoplay.onelink.me/ZSw2/eslls7kl'
     const params = new URLSearchParams()
     
-    // Main parameters
+    // Get all UTM parameters
+    const utmSource = searchParams.get('utm_source')
+    const utmCampaign = searchParams.get('utm_campaign')
+    const utmTerm = searchParams.get('utm_term')
+    const gclid = searchParams.get('gclid')
+    
+    // Add to OneLink if present
     if (utmSource) params.append('pid', utmSource)
     if (utmCampaign) params.append('c', utmCampaign)
-    
-    // Google Ads dynamic parameters
-    if (gid) params.append('af_adset', gid) // adgroup ID
-    if (adid) params.append('af_ad', adid) // creative ID
-    if (kw) params.append('af_keyword', kw) // keyword
-    
-    // Additional sub parameters for debugging
-    if (tid) params.append('af_sub1', tid) // target ID
-    if (mtype) params.append('af_sub2', mtype) // match type
-    if (device) params.append('af_sub3', device) // device
-    if (utmMedium) params.append('af_sub4', utmMedium) // medium
-    if (utmContent) params.append('af_sub5', utmContent) // content/creative
-    
-    // Google Click IDs
     if (gclid) params.append('gclid', gclid)
-    if (gbraid) params.append('gbraid', gbraid)
-    if (wbraid) params.append('wbraid', wbraid)
     
-    // Static retargeting parameters
+    // Parse utm_term for Smart Script values
+    if (utmTerm) {
+      const parts = utmTerm.split('|')
+      parts.forEach(part => {
+        if (part.includes('gid_')) params.append('af_adset', part.replace('gid_', ''))
+        if (part.includes('adid_')) params.append('af_ad', part.replace('adid_', ''))
+        if (part.includes('kw_')) params.append('af_keyword', part.replace('kw_', ''))
+      })
+    }
+    
+    // Static parameters
     params.append('af_siteid', 'google_w2a')
     params.append('af_channel', 'google_w2a')
     params.append('is_retargeting', 'true')
-    params.append('af_inactivity_window', '7d')
-    params.append('af_reengagement_window', '7d')
-    params.append('af_click_lookback', '7d')
     
-    const finalUrl = `${oneLinkBase}?${params.toString()}`
+    const finalUrl = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl
     setOneLinkUrl(finalUrl)
   }, [searchParams])
-
-  // Auto-slide disabled to prevent epilepsy issues
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!expanded) {
-  //       setCurrentSlide((prev) => (prev + 1) % series.length)
-  //     }
-  //   }, 6000)
-  //   return () => clearInterval(interval)
-  // }, [expanded])
 
   const series = [
     {
@@ -136,15 +97,13 @@ function YangoContent() {
     setExpanded(false)
   }
 
-  const minSwipeDistance = 40
-
-  const onTouchStart = (e: React.TouchEvent) => {
+  const handleSwipeStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
     setTouchStart(e.targetTouches[0].clientX)
     setSwipeDirection(null)
   }
 
-  const onTouchMove = (e: React.TouchEvent) => {
+  const handleSwipeMove = (e: React.TouchEvent) => {
     const currentTouch = e.targetTouches[0].clientX
     setTouchEnd(currentTouch)
     
@@ -156,21 +115,18 @@ function YangoContent() {
     }
   }
 
-  const onTouchEnd = () => {
+  const handleSwipeEnd = () => {
     if (!touchStart || !touchEnd) {
       setSwipeDirection(null)
       return
     }
-    const distance = touchStart - touchEnd
-    const velocity = Math.abs(distance)
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
     
-    if (isLeftSwipe || (distance > 20 && velocity > 30)) {
-      nextSlide()
-    } else if (isRightSwipe || (distance < -20 && velocity > 30)) {
-      prevSlide()
-    }
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 40
+    const isRightSwipe = distance < -40
+    
+    if (isLeftSwipe) nextSlide()
+    if (isRightSwipe) prevSlide()
     
     setTimeout(() => setSwipeDirection(null), 200)
   }
@@ -181,7 +137,6 @@ function YangoContent() {
 
   return (
     <div className="min-h-screen bg-[#0a0a14] text-white relative overflow-hidden">
-      {/* Gradient Orbs - hidden on mobile for performance */}
       <div className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/30 via-fuchsia-600/20 to-transparent rounded-full blur-3xl"></div>
       <div className="hidden md:block absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tl from-pink-600/20 via-purple-600/20 to-transparent rounded-full blur-3xl"></div>
       
@@ -226,29 +181,23 @@ function YangoContent() {
       <main className="relative z-10 px-4 pb-6">
         <div className="max-w-md mx-auto">
           
-          {/* Series Title */}
           <div className={`mb-3 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
             <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
               {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
             </h2>
           </div>
 
-          {/* Phone Mockup with Series */}
           <div className="relative max-w-[320px] mx-auto mb-4">
-            
-            {/* Phone Frame with beautiful design */}
             <div className="relative p-2 rounded-[2.5rem] bg-gradient-to-br from-purple-500/20 via-fuchsia-500/20 to-pink-500/20 shadow-2xl shadow-purple-500/30">
               <div 
                 className="relative aspect-[9/19.5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black shadow-xl border-2 border-white/10"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
+                onTouchStart={handleSwipeStart}
+                onTouchMove={handleSwipeMove}
+                onTouchEnd={handleSwipeEnd}
               >
-                {/* Navigation Arrows INSIDE phone */}
                 <button
                   onClick={prevSlide}
                   className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group border border-white/20 shadow-lg"
-                  aria-label="Previous"
                 >
                   <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -257,14 +206,12 @@ function YangoContent() {
                 <button
                   onClick={nextSlide}
                   className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group border border-white/20 shadow-lg"
-                  aria-label="Next"
                 >
                   <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
 
-                {/* Swipe indicator */}
                 {swipeDirection && (
                   <div className={`absolute top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${swipeDirection === 'left' ? 'right-16' : 'left-16'}`}>
                     <div className="w-12 h-12 bg-gradient-to-br from-purple-500/60 to-pink-500/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg animate-pulse">
@@ -275,7 +222,6 @@ function YangoContent() {
                   </div>
                 )}
 
-                {/* Series Card - Vertical Poster Style - Smooth crossfade without black screen */}
                 <div className="relative h-full w-full bg-black">
                   {series.map((show, index) => (
                     <img 
@@ -285,14 +231,10 @@ function YangoContent() {
                       className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
                         index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                       }`}
-                      loading="eager"
-                      decoding="async"
-                      fetchPriority={index === 0 ? 'high' : 'auto'}
                     />
                   ))}
                 </div>
                 
-                {/* Progress Bar */}
                 <div className="absolute top-3 left-3 right-3 z-10 flex gap-1.5">
                   {series.map((_, index) => (
                     <div key={index} className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
@@ -303,7 +245,6 @@ function YangoContent() {
                   ))}
                 </div>
                 
-                {/* Bottom Overlay with Description */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/85 to-transparent p-4 pb-5">
                   <h4 className={`text-lg font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                     {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
@@ -326,7 +267,6 @@ function YangoContent() {
                     }
                   </button>
                   
-                  {/* Dots Navigation */}
                   <div className="flex items-center justify-center gap-2 mt-9 clear-both">
                     {series.map((_, index) => (
                       <button
@@ -340,22 +280,18 @@ function YangoContent() {
                             ? 'bg-gradient-to-r from-purple-400 to-pink-400 w-8 shadow-lg shadow-purple-500/50' 
                             : 'bg-white/30 w-1.5 hover:bg-white/60 hover:w-3'
                         }`}
-                        aria-label={`Series ${index + 1}`}
                       />
                     ))}
                   </div>
                 </div>
               </div>
             </div>
-            </div>
             
-            {/* Series Counter */}
             <div className="text-center mt-4 text-xs text-white/40 font-medium">
               {currentSlide + 1} / {series.length}
             </div>
           </div>
 
-          {/* Watch Now Button with Series Name */}
           <button
             onClick={handleDownload}
             className="relative w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 px-6 rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/70 hover:scale-[1.03] active:scale-95 border border-purple-400/30 overflow-hidden group"
@@ -371,7 +307,6 @@ function YangoContent() {
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
           </button>
 
-          {/* Hint */}
           <p className="text-center text-xs text-white/30 mt-4 font-light">
             {lang === 'en' ? 'Swipe or use arrows to explore more' : 'اسحب أو استخدم الأسهم للمزيد'}
           </p>
