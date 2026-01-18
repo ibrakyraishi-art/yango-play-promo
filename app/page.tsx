@@ -148,23 +148,12 @@ function YangoContent() {
       <header className="relative z-10 py-4 px-4">
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <svg className="w-9 h-9" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="url(#iconGradient)"/>
-                <path d="M20 10L24 16L20 16L20 10Z" fill="white" opacity="0.9"/>
-                <circle cx="20" cy="22" r="4" fill="white"/>
-                <path d="M20 30L16 24L20 24L20 30Z" fill="white" opacity="0.9"/>
-                <defs>
-                  <linearGradient id="iconGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#9333ea"/>
-                    <stop offset="50%" stopColor="#c026d3"/>
-                    <stop offset="100%" stopColor="#ec4899"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-              <h1 className="text-lg font-bold tracking-wide">
-                Yango Play
-              </h1>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/posters/yango play – one line – black.png" 
+                alt="Yango Play" 
+                className="h-8 w-auto brightness-0 invert"
+              />
             </div>
             
             <div className="flex items-center gap-1.5 bg-white/5 rounded-full p-0.5 border border-white/10">
