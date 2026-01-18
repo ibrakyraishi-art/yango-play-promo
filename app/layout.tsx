@@ -7,6 +7,18 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  openGraph: {
+    title: 'Yango Play',
+    description: 'Watch the best Arabic series on Yango Play',
+    siteName: 'Yango Play',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Yango Play',
+    description: 'Watch the best Arabic series on Yango Play',
+  },
 }
 
 export default function RootLayout({
