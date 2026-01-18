@@ -12,6 +12,7 @@ function YangoContent() {
   const [expanded, setExpanded] = useState(false)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null)
 
   useEffect(() => {
     const utmSource = searchParams.get('utm_source') || ''
@@ -49,19 +50,31 @@ function YangoContent() {
     return () => clearInterval(interval)
   }, [expanded])
 
-  const minSwipeDistance = 50
+  const minSwipeDistance = 30
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
     setTouchStart(e.targetTouches[0].clientX)
+    setSwipeDirection(null)
   }
 
   const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
+    const currentTouch = e.targetTouches[0].clientX
+    setTouchEnd(currentTouch)
+    
+    if (touchStart) {
+      const distance = touchStart - currentTouch
+      if (Math.abs(distance) > 10) {
+        setSwipeDirection(distance > 0 ? 'left' : 'right')
+      }
+    }
   }
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
+    if (!touchStart || !touchEnd) {
+      setSwipeDirection(null)
+      return
+    }
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
@@ -71,6 +84,7 @@ function YangoContent() {
     if (isRightSwipe) {
       prevSlide()
     }
+    setSwipeDirection(null)
   }
 
   const nextSlide = () => {
@@ -186,40 +200,53 @@ function YangoContent() {
           {/* Phone Mockup with Series */}
           <div className="relative max-w-[320px] mx-auto mb-4">
             
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows with haptic feedback */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 rounded-full flex items-center justify-center transition-all group border border-white/10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full flex items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
               aria-label="Previous"
             >
-              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/40 hover:to-pink-500/40 rounded-full flex items-center justify-center transition-all group border border-white/10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-11 h-11 bg-gradient-to-br from-purple-500/30 to-pink-500/30 hover:from-purple-500/50 hover:to-pink-500/50 rounded-full flex items-center justify-center transition-all group border border-purple-400/30 shadow-lg shadow-purple-500/20"
               aria-label="Next"
             >
-              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg className="w-5 h-5 group-hover:scale-125 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
 
-            <div 
-              className="relative aspect-[9/19.5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black shadow-2xl shadow-purple-500/40 border border-white/5"
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-            >
+            {/* Swipe indicator */}
+            {swipeDirection && (
+              <div className={`absolute top-1/2 -translate-y-1/2 z-30 pointer-events-none ${swipeDirection === 'left' ? 'right-4' : 'left-4'}`}>
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center animate-pulse">
+                  <svg className="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d={swipeDirection === 'left' ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+                  </svg>
+                </div>
+              </div>
+            )}
+
+            {/* Phone Frame with beautiful design */}
+            <div className="relative p-2 rounded-[2.5rem] bg-gradient-to-br from-purple-500/20 via-fuchsia-500/20 to-pink-500/20 shadow-2xl shadow-purple-500/30">
+              <div 
+                className="relative aspect-[9/19.5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black shadow-xl border-2 border-white/10"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
               {/* Series Card - Vertical Poster Style */}
-              <div className="relative h-full w-full">
+              <div className="relative h-full w-full transition-transform duration-500 ease-out">
                 <Image 
                   src={series[currentSlide].image}
                   alt={lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   fill
                   priority
-                  quality={60}
+                  quality={85}
                   sizes="(max-width: 768px) 320px, 400px"
                   className="object-cover"
                   placeholder="blur"
@@ -229,9 +256,9 @@ function YangoContent() {
                 {/* Progress Bar */}
                 <div className="absolute top-3 left-3 right-3 z-10 flex gap-1.5">
                   {series.map((_, index) => (
-                    <div key={index} className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+                    <div key={index} className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 ${index === currentSlide ? 'w-full' : 'w-0'}`}
+                        className={`h-full bg-gradient-to-r from-purple-400 to-pink-400 shadow-sm shadow-purple-500/50 transition-all duration-500 ease-out ${index === currentSlide ? 'w-full' : index < currentSlide ? 'w-full opacity-50' : 'w-0'}`}
                       />
                     </div>
                   ))}
@@ -252,7 +279,7 @@ function YangoContent() {
                   
                   <button
                     onClick={() => setExpanded(!expanded)}
-                    className={`text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-300 hover:to-pink-300 transition-all ${lang === 'ar' ? 'float-right' : 'float-left'}`}
+                    className={`text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-300 hover:to-pink-300 active:scale-95 transition-all ${lang === 'ar' ? 'float-right' : 'float-left'}`}
                   >
                     {expanded 
                       ? (lang === 'en' ? '← Show less' : 'أقل ←')
@@ -269,10 +296,10 @@ function YangoContent() {
                           setCurrentSlide(index)
                           setExpanded(false)
                         }}
-                        className={`h-1.5 rounded-full transition-all ${
+                        className={`h-1.5 rounded-full transition-all active:scale-90 ${
                           index === currentSlide 
                             ? 'bg-gradient-to-r from-purple-400 to-pink-400 w-8 shadow-lg shadow-purple-500/50' 
-                            : 'bg-white/30 w-1.5 hover:bg-white/50'
+                            : 'bg-white/30 w-1.5 hover:bg-white/60 hover:w-3'
                         }`}
                         aria-label={`Series ${index + 1}`}
                       />
@@ -281,9 +308,10 @@ function YangoContent() {
                 </div>
               </div>
             </div>
+            </div>
             
             {/* Series Counter */}
-            <div className="text-center mt-3 text-xs text-white/40 font-medium">
+            <div className="text-center mt-4 text-xs text-white/40 font-medium">
               {currentSlide + 1} / {series.length}
             </div>
           </div>
@@ -291,9 +319,10 @@ function YangoContent() {
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/60 hover:scale-[1.02] active:scale-98 border border-purple-400/20"
+            className="relative w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/70 hover:scale-[1.03] active:scale-95 border border-purple-400/30 overflow-hidden group"
           >
-            {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
+            <span className="relative z-10">{lang === 'en' ? 'Download App' : 'تحميل التطبيق'}</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
           </button>
 
           {/* Hint */}
