@@ -127,54 +127,70 @@ function YangoContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-fuchsia-950 to-indigo-950 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a14] text-white relative overflow-hidden">
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/30 via-fuchsia-600/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tl from-pink-600/20 via-purple-600/20 to-transparent rounded-full blur-3xl"></div>
       
-      <header className="relative z-10 py-3 px-4 md:py-5">
+      <header className="relative z-10 py-4 px-4">
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl md:text-2xl font-black tracking-tight" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
-              YANGO PLAY
-            </h1>
+            <div className="flex items-center gap-2">
+              <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="16" fill="url(#gradient)" />
+                <path d="M16 8L20 14H12L16 8Z" fill="white" />
+                <path d="M16 24L12 18H20L16 24Z" fill="white" />
+                <defs>
+                  <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                    <stop offset="0%" stopColor="#a855f7" />
+                    <stop offset="100%" stopColor="#ec4899" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <h1 className="text-lg font-bold tracking-wide">
+                Yango Play
+              </h1>
+            </div>
             
-            <div className="flex items-center gap-2 bg-white/10 rounded-full p-0.5">
+            <div className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-full p-0.5 border border-white/10">
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1 text-xs font-medium rounded-full transition-all ${
-                  lang === 'en' ? 'bg-white text-black' : 'text-white/70'
+                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                  lang === 'en' ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30' : 'text-white/60 hover:text-white/80'
                 }`}
               >
-                EN
+                Eng
               </button>
               <button
                 onClick={() => setLang('ar')}
-                className={`px-2.5 py-1 text-xs font-medium rounded-full transition-all ${
-                  lang === 'ar' ? 'bg-white text-black' : 'text-white/70'
+                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                  lang === 'ar' ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30' : 'text-white/60 hover:text-white/80'
                 }`}
               >
-                AR
+                العربية
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="relative z-10 px-4 pb-4">
+      <main className="relative z-10 px-4 pb-6">
         <div className="max-w-md mx-auto">
           
           {/* Series Title */}
-          <div className={`mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-            <h2 className="text-2xl md:text-3xl font-black leading-tight" style={{ fontFamily: 'Arial Black, Impact, sans-serif' }}>
+          <div className={`mb-3 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight">
               {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
             </h2>
           </div>
 
           {/* Phone Mockup with Series */}
-          <div className="relative max-w-[300px] mx-auto mb-3">
+          <div className="relative max-w-[320px] mx-auto mb-4">
             
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 backdrop-blur-md rounded-full flex items-center justify-center transition-all group border border-white/10"
               aria-label="Previous"
             >
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -183,7 +199,7 @@ function YangoContent() {
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all group"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-20 w-10 h-10 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 backdrop-blur-md rounded-full flex items-center justify-center transition-all group border border-white/10"
               aria-label="Next"
             >
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,7 +208,7 @@ function YangoContent() {
             </button>
 
             <div 
-              className="relative aspect-[9/19.5] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl shadow-purple-500/30"
+              className="relative aspect-[9/19.5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-gray-900 to-black shadow-2xl shadow-purple-500/40 border border-white/5"
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
@@ -210,23 +226,23 @@ function YangoContent() {
                 />
                 
                 {/* Progress Bar */}
-                <div className="absolute top-2 left-2 right-2 z-10 flex gap-1">
+                <div className="absolute top-3 left-3 right-3 z-10 flex gap-1.5">
                   {series.map((_, index) => (
-                    <div key={index} className="flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden">
+                    <div key={index} className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
                       <div 
-                        className={`h-full bg-white transition-all duration-300 ${index === currentSlide ? 'w-full' : 'w-0'}`}
+                        className={`h-full bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 ${index === currentSlide ? 'w-full' : 'w-0'}`}
                       />
                     </div>
                   ))}
                 </div>
                 
                 {/* Bottom Overlay with Description */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-4 pb-5">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-4 pb-5 backdrop-blur-sm">
                   <h4 className={`text-lg font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                     {lang === 'en' ? series[currentSlide].title : series[currentSlide].titleAr}
                   </h4>
                   
-                  <p className={`text-xs opacity-90 mb-2 leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'} ${expanded ? '' : 'line-clamp-2'}`}>
+                  <p className={`text-xs text-white/80 mb-2.5 leading-relaxed ${lang === 'ar' ? 'text-right' : 'text-left'} ${expanded ? '' : 'line-clamp-2'}`}>
                     {lang === 'en' 
                       ? (expanded ? series[currentSlide].fullDesc : series[currentSlide].shortDesc)
                       : (expanded ? series[currentSlide].fullDescAr : series[currentSlide].shortDescAr)
@@ -235,16 +251,16 @@ function YangoContent() {
                   
                   <button
                     onClick={() => setExpanded(!expanded)}
-                    className={`text-xs font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity ${lang === 'ar' ? 'float-right' : 'float-left'}`}
+                    className={`text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-300 hover:to-pink-300 transition-all ${lang === 'ar' ? 'float-right' : 'float-left'}`}
                   >
                     {expanded 
                       ? (lang === 'en' ? '← Show less' : 'أقل ←')
-                      : (lang === 'en' ? 'Read more →' : 'اقرأ المزيد ←')
+                      : (lang === 'en' ? 'Read more →' : 'اقرأ المزيد →')
                     }
                   </button>
                   
                   {/* Dots Navigation */}
-                  <div className="flex items-center justify-center gap-1.5 mt-8 clear-both">
+                  <div className="flex items-center justify-center gap-2 mt-9 clear-both">
                     {series.map((_, index) => (
                       <button
                         key={index}
@@ -254,8 +270,8 @@ function YangoContent() {
                         }}
                         className={`h-1.5 rounded-full transition-all ${
                           index === currentSlide 
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 w-8' 
-                            : 'bg-white/40 w-1.5 hover:bg-white/60'
+                            ? 'bg-gradient-to-r from-purple-400 to-pink-400 w-8 shadow-lg shadow-purple-500/50' 
+                            : 'bg-white/30 w-1.5 hover:bg-white/50'
                         }`}
                         aria-label={`Series ${index + 1}`}
                       />
@@ -266,7 +282,7 @@ function YangoContent() {
             </div>
             
             {/* Series Counter */}
-            <div className="text-center mt-2 text-xs text-white/50">
+            <div className="text-center mt-3 text-xs text-white/40 font-medium">
               {currentSlide + 1} / {series.length}
             </div>
           </div>
@@ -274,14 +290,14 @@ function YangoContent() {
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="w-full max-w-[300px] mx-auto block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-base font-bold py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/50 hover:scale-[1.02] active:scale-95"
+            className="w-full max-w-[320px] mx-auto block bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 hover:from-purple-600 hover:via-fuchsia-600 hover:to-pink-600 text-white text-base font-semibold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/60 hover:scale-[1.02] active:scale-98 border border-purple-400/20"
           >
-            {lang === 'en' ? 'Download App' : 'تحميل التطبيق'}
+            {lang === 'en' ? '⬇ Download App' : 'تحميل التطبيق ⬇'}
           </button>
 
           {/* Hint */}
-          <p className="text-center text-xs text-white/40 mt-3">
-            {lang === 'en' ? 'Swipe or use arrows to explore more series' : 'اسحب أو استخدم الأسهم لاستكشاف المزيد'}
+          <p className="text-center text-xs text-white/30 mt-4 font-light">
+            {lang === 'en' ? 'Swipe or use arrows to explore more' : 'اسحب أو استخدم الأسهم للمزيد'}
           </p>
 
         </div>
