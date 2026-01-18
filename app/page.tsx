@@ -75,18 +75,6 @@ function YangoContent() {
     
     const finalUrl = `${oneLinkBase}?${params.toString()}`
     setOneLinkUrl(finalUrl)
-    
-    console.log('🎯 Smart Script - Parsed UTM:', {
-      source: utmSource,
-      campaign: utmCampaign,
-      campaignId: cid,
-      adgroupId: gid,
-      creativeId: adid,
-      keyword: kw,
-      matchType: mtype,
-      device: device
-    })
-    console.log('🔗 OneLink Generated:', finalUrl)
   }, [searchParams])
 
   // Auto-slide disabled to prevent epilepsy issues
