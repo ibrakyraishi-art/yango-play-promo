@@ -150,13 +150,12 @@ function YangoContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <svg className="w-10 h-10 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="url(#iconGrad)"/>
-                <path d="M20 13L16 20L24 20L20 13Z" fill="white"/>
-                <path d="M20 27L24 20L16 20L20 27Z" fill="white"/>
+                <circle cx="20" cy="20" r="20" fill="url(#yangoGrad)"/>
+                <path d="M20 12L26 20L20 28L14 20L20 12Z" fill="white"/>
                 <defs>
-                  <linearGradient id="iconGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#9333ea"/>
-                    <stop offset="50%" stopColor="#c026d3"/>
+                  <linearGradient id="yangoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#a855f7"/>
+                    <stop offset="50%" stopColor="#d946ef"/>
                     <stop offset="100%" stopColor="#ec4899"/>
                   </linearGradient>
                 </defs>
