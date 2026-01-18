@@ -282,22 +282,23 @@ function YangoContent() {
                     </div>
                   </div>
                 )}
-              {/* Series Card - Vertical Poster Style - Smooth crossfade without black screen */}
-              <div className="relative h-full w-full bg-black">
-                {series.map((show, index) => (
-                  <img 
-                    key={index}
-                    src={show.image}
-                    alt={lang === 'en' ? show.title : show.titleAr}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                      index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                  />
-                ))}
-              </div>
+
+                {/* Series Card - Vertical Poster Style - Smooth crossfade without black screen */}
+                <div className="relative h-full w-full bg-black">
+                  {series.map((show, index) => (
+                    <img 
+                      key={index}
+                      src={show.image}
+                      alt={lang === 'en' ? show.title : show.titleAr}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                        index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                      }`}
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
+                    />
+                  ))}
+                </div>
                 
                 {/* Progress Bar */}
                 <div className="absolute top-3 left-3 right-3 z-10 flex gap-1.5">
